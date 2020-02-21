@@ -19,13 +19,30 @@ class CalcController {
       this.setDisplayDateTime();
     }, 1000);
   }
+ 
+  /**
+   * Criamos um metodo addEventListenerAll para incluir mais de um evento
+   * no mesmo botao, que recebe o 'element' a ser clicado, no caso o botao. 'events' que são
+   * os eventos do click. E a função a ser executada em cada evento.
+   */
+  addEventListenerAll(element, events, fn) {
+
+    events.split(' ').forEach(event => {
+      element.addEventListener(event, fn, false);
+    })
+
+  }
 
   initButtonsEvents() {
     let buttons = document.querySelectorAll('#buttons > g, #parts > g');
 
     buttons.forEach(btn => {
-      btn.addEventListener('click', e=> {
-        console.log(btn.className.baseVal.replace('btn-', ''))
+      this.addEventListenerAll(btn, 'click drag mouseover', e=> {
+        console.log(btn.className.baseVal.replace('btn-', ''));
+      })
+
+      this.addEventListenerAll(btn, 'mouseover mouseup mousedown', e=> {
+        btn.style.cursor = 'pointer';
       })
     })
   }
